@@ -1,0 +1,18 @@
+#!/bin/bash
+config_dir=/usr/local/service/etc
+mkdir -p $config_dir
+cp ./etc/nodes.env $config_dir
+cp ./etc/components.env $config_dir
+cp ./etc/cluster.env $config_dir
+cp ./etc/secret.env $config_dir
+
+d=/usr/lib/systemd/system/
+function w(){
+b=$(dirname $config_dir)
+cp ./${1}.env $b
+./bin/unit > $d/$1
+
+}
+w busybox.service
+
+systemctl daemon-reload
