@@ -15,7 +15,8 @@ echo ExecStartPre=-/bin/docker kill %n
 echo ExecStartPre=-/bin/docker rm %n
 echo ExecStart=/bin/docker run \\
 echo --name %n \\
-echo \$IMAGE_NAME:\$TAG
+echo \${IMAGE_NAME}:\${TAG} \\
+echo "/bin/ping www.baidu.com"
 echo ExecStop=-/bin/docker stop %n
 echo Restart=on-failure
 echo RestartSec=1s
