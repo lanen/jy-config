@@ -1,0 +1,5 @@
+#!/bin/bash
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo \${IMAGE_NAME}:\${TAG} \\
+echo "/bin/ping www.qq.com"

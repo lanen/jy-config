@@ -1,18 +1,38 @@
 #!/bin/bash
 config_dir=/usr/local/service/etc
-mkdir -p $config_dir
-cp ./etc/nodes.env $config_dir
-cp ./etc/components.env $config_dir
-cp ./etc/cluster.env $config_dir
-cp ./etc/secret.env $config_dir
 
-d=/usr/lib/systemd/system/
-function w(){
-b=$(dirname $config_dir)
-cp ./${1}.env $b
-./bin/unit > $d/$1
-
+function common_environment_file(){
+    echo "prepare common environment file"
+    mkdir -p $config_dir
+    cp ./etc/nodes.env $config_dir
+    cp ./etc/components.env $config_dir
+    cp ./etc/cluster.env $config_dir
+    cp ./etc/secret.env $config_dir
 }
-w busybox.service
+
+function systemd_unit_config(){
+    echo "prepare service environment file. for [${1}]"
+    d=/usr/lib/systemd/system/
+    b=$(dirname $config_dir)
+    cp ./services/${1}.env $b
+    ./bin/unit $1 > $d/$1
+}
+
+common_environment_file
+
+units=$(<./services/systemctl_units)
+
+for unit in ${units[@]}; do
+    # 判断配置文件是否存在
+    if [ ! -f "./services/${unit}.env" ]; then
+        echo "file [./services/${unit}.env] not exists"
+	break
+    fi
+    # 拉去镜像
+    ./bin/pull $unit
+    # 配置 systemd 单元
+    systemd_unit_config $unit
+    echo "setup [$unit] done."
+done
 
 systemctl daemon-reload

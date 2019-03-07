@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function unstall_systemctl_unit(){
+     d=/usr/lib/systemd/system
+     if [ -f "$d/$1" ]; then
+         rm $d/$1
+     fi 
+
+}
+
+

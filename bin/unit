@@ -1,6 +1,19 @@
 #!/bin/bash
 conf_dir=/usr/local/service/etc
 work_dir=/usr/local/service
+
+script=$1
+
+if [ ! -f "./services/${1}.unit" ]; then
+    echo "file not ./services/${1}.unit exits"
+    exit -1
+fi
+
+function exec_start(){
+. ./services/${1}.unit 
+}
+
+#############################################3
 echo [Unit]
 echo Description=%n
 
@@ -13,12 +26,9 @@ echo EnvironmentFile=$conf_dir/secret.env
 echo EnvironmentFile=$work_dir/%n.env
 echo ExecStartPre=-/bin/docker kill %n
 echo ExecStartPre=-/bin/docker rm %n
-echo ExecStart=/bin/docker run \\
-echo --name %n \\
-echo \${IMAGE_NAME}:\${TAG} \\
-echo "/bin/ping www.baidu.com"
+exec_start $script
 echo ExecStop=-/bin/docker stop %n
 echo Restart=on-failure
 echo RestartSec=1s
 echo TimeoutStartSec=120
-echo TimeoutStopSec=30
+echo TimeoutStopSec=10
