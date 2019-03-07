@@ -24,7 +24,7 @@ echo EnvironmentFile=$conf_dir/components.env
 echo EnvironmentFile=$conf_dir/cluster.env
 echo EnvironmentFile=$conf_dir/secret.env
 echo EnvironmentFile=$work_dir/%n.env
-echo ExecStartPre=-/bin/docker kill %n
+echo ExecStartPre=-/bin/docker stop %n
 echo ExecStartPre=-/bin/docker rm %n
 exec_start $script
 echo ExecStop=-/bin/docker stop %n
