@@ -1,8 +1,8 @@
 #!/bin/bash
-echo ExecStart=/bin/docker run \\
+echo ExecStart=-/bin/docker run \\
 echo --name %n \\
 echo -p 8080:8080 \\
 echo -p 50000:50000 \\
 echo -v \${JENKINS_HOME}:/var/jenkins_home \\
 echo -v /var/run/docker.sock:/var/run/docker.sock \\
-echo -d \${IMAGE_NAME}:\${TAG}
+echo  \${IMAGE_NAME}:\${TAG}

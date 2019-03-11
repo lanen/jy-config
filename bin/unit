@@ -16,7 +16,8 @@ function exec_start(){
 #############################################3
 echo [Unit]
 echo Description=%n
-
+echo After=docker.service
+echo Requires=docker.service
 echo [Service]
 
 echo EnvironmentFile=$conf_dir/nodes.env
@@ -32,3 +33,6 @@ echo Restart=on-failure
 echo RestartSec=1s
 echo TimeoutStartSec=120
 echo TimeoutStopSec=10
+
+echo [Install]
+echo WantedBy=multi-user.target
