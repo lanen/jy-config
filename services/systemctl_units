@@ -1,2 +1,1 @@
-fluentd.service
-mysql.service
+jy-auth-server.service
