@@ -1,0 +1,13 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${SERVER_PORT}:8080 \\
+echo -p 8081:8081 \\
+echo "-e TELETRAAN_DB_HOST=\${TELETRAAN_DB_HOST} \\"
+echo "-e TELETRAAN_DB_PORT=\${TELETRAAN_DB_PORT} \\"
+echo "-e TELETRAAN_DB_USER=\${TELETRAAN_DB_USER} \\"
+echo "-e TELETRAAN_DB_PASSWORD=\${TELETRAAN_DB_PASSWORD} \\"
+echo "-e TELETRAAN_DASHBOARD_URL=\${TELETRAAN_DASHBOARD_URL} \\"
+
+echo  \${IMAGE_NAME}:\${TAG}
