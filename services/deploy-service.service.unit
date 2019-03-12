@@ -4,6 +4,7 @@ echo ExecStart=/bin/docker run \\
 echo --name %n \\
 echo -p \${SERVER_PORT}:8080 \\
 echo -p 8081:8081 \\
+echo --link mysql.service:deploy-mysql \\
 echo "-e TELETRAAN_DB_HOST=\${TELETRAAN_DB_HOST} \\"
 echo "-e TELETRAAN_DB_PORT=\${TELETRAAN_DB_PORT} \\"
 echo "-e TELETRAAN_DB_USER=\${TELETRAAN_DB_USER} \\"
