@@ -1,0 +1,5 @@
+#!/bin/bash
+. ./services/rabbitmq.service.env
+mkdir -p $RABBITMQ_HOME
+chmod -R 777 $RABBITMQ_HOME
+

@@ -1,0 +1,9 @@
+#!/bin/bash
+echo ExecStart=-/bin/docker run \\
+echo --name %n \\
+echo -p \${PORT}:\${PORT} \\
+echo -p \${PORT}:\${PORT}/udp \\
+echo -v \${DATA_HOME}:/fluentd/log \\
+echo -v \${DTC_HOME}:/fluentd/etc \\
+echo "-e FLUENTD_CONF=fluentd.conf" \\
+echo  \${IMAGE_NAME}:\${TAG} 

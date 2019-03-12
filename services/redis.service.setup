@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. ./services/redis.service.env
+mkdir -p $DATA_HOME
+chmod -R 777 $DATA_HOME
+

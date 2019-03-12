@@ -1,0 +1,15 @@
+#!/bin/bash
+
+mkdir -p /var/run/fluentd
+mkdir -p /usr/local/service/fluent/etc/
+chmod -R 777 /var/run/fluentd
+
+tee /usr/local/service/fluent/etc/fluent.conf <<-'EOF'
+<source>
+  @type forward
+</source>
+
+<match *>
+  @type stdout
+</match>
+EOF

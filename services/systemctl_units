@@ -1,1 +1,2 @@
-mongodb.service
+fluentd.service
+mysql.service
