@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+tee /usr/local/service/etc/yapi-config.json <<-'EOF'
+{
+  "port": "3000",
+  "adminAccount": "lanenqq@163.com",
+  "versionNotify": true,
+  "db": {
+    "servername": "yapi-mongo",
+    "DATABASE": "yapi",
+    "port": 27017
+  },
+  "mail": {
+    "enable": false,
+    "host": "smtp.163.com",
+    "port": 465,
+    "from": "***@163.com",
+    "auth": {
+      "user": "***@163.com",
+      "pass": "*****"
+    }
+  }
+}
+
+EOF
