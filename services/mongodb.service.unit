@@ -1,6 +1,4 @@
 #!/bin/bash
-mkdir -p $DATA_HOME
-chmod -R 777 $DATA_HOME
 echo ExecStart=-/bin/docker run \\
 echo --name %n \\
 echo -p \${PORT}:\${PORT} \\

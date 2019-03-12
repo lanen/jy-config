@@ -1,11 +1,9 @@
 #!/bin/bash
-mkdir -p $RABBITMQ_HOME 
-chmod -R 777 $RABBITMQ_HOME
 echo ExecStart=-/bin/docker run \\
 echo --name %n \\
 echo -p \${PORT}:\${PORT} \\
 echo -p 15672:15672 \\
 echo -v \${RABBITMQ_HOME}:/var/lib/rabbitmq \\
-echo -e RABBITMQ_DEFAULT_USER=\${RABBITMQ_DEFAULT_USER} \\
-echo -e RABBITMQ_DEFAULT_PASS=\${RABBITMQ_DEFAULT_PASS} \\
+echo "-e RABBITMQ_DEFAULT_USER=\${RABBITMQ_DEFAULT_USER}" \\
+echo "-e RABBITMQ_DEFAULT_PASS=\${RABBITMQ_DEFAULT_PASS}" \\
 echo  \${IMAGE_NAME}:\${TAG}
