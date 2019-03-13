@@ -6,6 +6,9 @@
 function pull_image() {
     image_name=$1
     image_tag=$2
+    if [ -z $image_name ]; then
+	return
+    fi
     id=`docker images | grep $image_name | grep $image_tag | head -n 1 | awk '{print $3}'` 
     if [ -z $id ]; then
 	echo "prepare docker image $image_name:$image_tag"

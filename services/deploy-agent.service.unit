@@ -1,0 +1,3 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/usr/bin/deploy-agent -f /usr/local/service/deploy-agent/conf/agent.conf

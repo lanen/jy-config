@@ -1,4 +1,1 @@
-deploy-service.service
-deploy-board.service
-mysql.service
-fluentd.service
+deploy-agent.service

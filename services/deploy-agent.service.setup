@@ -1,0 +1,75 @@
+#!/bin/bash
+b=/usr/local/service
+d=/var/run/deploy-agent/data
+mkdir -p $b/deploy-agent
+mkdir -p $b/deploy-agent/conf
+
+mkdir -p $d/builds
+mkdir -p $d/logs
+mkdir -p $d/targets
+
+if [ $(yum list installed | grep -s python-devel | wc -l ) -eq 0 ]; then
+   yum install python-devel
+fi
+
+pip install ./deploy/deploy-agent-1.2.15.tar.gz  -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+
+tee $b/deploy-agent/conf/agent.conf <<-'EOF'
+# This profile is for running the integration tests in a real browser,
+# so people can see what happens in the tests.
+[default_config]
+deploy_agent_dir = /var/run/deploy-agent/data
+
+target_default_dir = /var/run/deploy-agent/data/targets
+
+# the directory for builds
+builds_dir = /var/run/deploy-agent/data/builds
+
+# deployment log directory
+log_directory = /var/run/deploy-agent/data/logs
+
+# log level for deploy-agent.log
+log_level = DEBUG
+
+# Timeout in seconds to wait for process.poll()
+process_wait_interval = 2
+
+# the hard timeout for executing a process (set to 30 mins)
+process_timeout = 1800
+
+# ping server interval in seconds
+min_running_time = 60
+
+back_off_factor = 2
+
+# subprocess max sleep interval in seconds
+max_sleep_interval = 60
+
+# number of package to retain on the host
+num_builds_to_retain = 2
+
+# the package extension
+package_format = tar.gz
+# max retry times
+max_retry = 3
+
+# maximum number of bytes of error message to tail
+max_tail_bytes = 20480
+
+# s3 download prerequisites
+# aws_access_key_id =
+# aws_secret_access_key =
+
+# Restful Teletraan settings
+teletraan_service_url = http://127.0.0.1:8080
+teletraan_service_version = v1
+teletraan_service_token =
+
+EOF
+
+tee /var/run/deploy-agent/host_info <<-'EOF'
+groups=java
+id=centos-linux
+host=centos-linux
+ip=10.211.55.4
+EOF
