@@ -38,4 +38,13 @@ for unit in ${units[@]}; do
     echo "setup [$unit] done."
 done
 
+timers=$(<./services/systemctl_timer)
+
+for timer in ${timers[@]}; do
+    if [ -f "./services/${timer}.unit" ]; then
+	echo "prepare timer [$timer]"
+	cp ./services/${timer}.unit /usr/lib/systemd/system/${timer}
+    fi
+done
+
 systemctl daemon-reload

@@ -1,0 +1,13 @@
+[Unit]
+Description=Run deploy-agent every minute
+
+[Timer]
+OnUnitActiveSec=1min
+OnActiveSec=1min
+OnBootSec=2min
+Unit=deploy-agent.service
+
+[Install]
+WantedBy=rescue.target
+
+
