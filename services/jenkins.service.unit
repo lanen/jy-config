@@ -1,8 +1,11 @@
 #!/bin/bash
 echo ExecStart=-/bin/docker run \\
 echo --name %n \\
+echo --rm \\
 echo -p 8080:8080 \\
 echo -p 50000:50000 \\
 echo -v \${JENKINS_HOME}:/var/jenkins_home \\
+echo -v /root/.gradle:/root/.gradle \\
+echo -v /root/.m2:/root/.m2 \\
 echo -v /var/run/docker.sock:/var/run/docker.sock \\
 echo  \${IMAGE_NAME}:\${TAG}

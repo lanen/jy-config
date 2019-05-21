@@ -7,4 +7,4 @@ if [ "xon" == "x$SYS_FLUENTD_SUPPORT" ]; then
 echo "--log-driver=fluentd \\";
 echo "--log-opt fluentd-address=\${FLUENTD_ADDRESS} \\";
 fi
-echo  \${IMAGE_NAME}:\${TAG} --spring.profiles.active=dev,docker
+echo  \${IMAGE_NAME}:\${TAG}

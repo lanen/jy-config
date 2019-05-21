@@ -1,1 +1,5 @@
-deploy-agent.service
+mysql.service
+jenkins.service
+rabbitmq.service
+swagger-editor.service
+yapi.service
