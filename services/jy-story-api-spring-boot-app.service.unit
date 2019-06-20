@@ -1,0 +1,11 @@
+#!/bin/bash
+. bin/env
+docker pull ${IMAGE_NAME}:${TAG}
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${STORY_SERVER_PORT}:8080 \\
+if [ "xon" == "x$SYS_FLUENTD_SUPPORT" ]; then
+echo "--log-driver=fluentd \\";
+echo "--log-opt fluentd-address=\${FLUENTD_ADDRESS} \\";
+fi
+echo  \${IMAGE_NAME}:\${TAG}

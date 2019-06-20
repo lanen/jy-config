@@ -1,0 +1,13 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${PORT}:\${PORT} \\
+echo "-e POSTGRES_PASSWORD=\${POSTGRES_PASSWORD}" \\
+echo "-e POSTGRES_USER=\${POSTGRES_USER}" \\
+echo -v \${DATA_HOME}:/var/lib/postgresql \\
+if [ "xon" == "x$SYS_FLUENTD_SUPPORT" ]; then
+echo "--log-driver=fluentd \\";
+echo "--log-opt fluentd-address=\${FLUENTD_ADDRESS} \\";
+fi
+echo  \${IMAGE_NAME}:\${TAG}

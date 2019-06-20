@@ -7,7 +7,7 @@ tee /usr/local/service/etc/yapi-config.json <<-'EOF'
   "adminAccount": "lanenqq@163.com",
   "versionNotify": true,
   "db": {
-    "servername": "yapi-mongo",
+    "servername": "mongodb.service",
     "DATABASE": "yapi",
     "port": 27017
   },

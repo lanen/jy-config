@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function w(){
+    . ./services/${1}.env
+    docker pull $IMAGE_NAME:$TAG 
+}
+w jy-story-api-spring-boot-app.service
+
