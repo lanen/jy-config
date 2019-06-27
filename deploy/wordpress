@@ -1,0 +1,3 @@
+wordpress.service
+mysql.service
+fluentd.service

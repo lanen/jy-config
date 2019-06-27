@@ -5,4 +5,3 @@ swagger-editor.service
 mongodb.service
 yapi.service
 psql.service
-jy-story-api-spring-boot-app.service

@@ -1,0 +1,16 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${PORT}:9000 \\
+echo --link mysql.service\\
+echo "-e WORDPRESS_DB_HOST=\${WORDPRESS_DB_HOST}" \\
+echo "-e WORDPRESS_DB_USER=\${WORDPRESS_DB_USER}" \\
+echo "-e WORDPRESS_DB_PASSWORD=\${WORDPRESS_DB_PASSWORD}" \\
+echo "-e WORDPRESS_DB_NAME=\${WORDPRESS_DB_NAME}" \\
+echo "-e WORDPRESS_TABLE_PREFIX=\${WORDPRESS_TABLE_PREFIX}" \\
+if [ "xon" == "x$SYS_FLUENTD_SUPPORT" ]; then
+echo "--log-driver=fluentd \\";
+echo "--log-opt fluentd-address=\${FLUENTD_ADDRESS} \\";
+fi
+echo  \${IMAGE_NAME}:\${TAG}

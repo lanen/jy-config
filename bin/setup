@@ -22,8 +22,11 @@ function systemd_unit_config(){
 }
 
 common_environment_file
-
-units=$(<./services/systemctl_units)
+file=$1
+if [ ! -f $file ]; then
+file=./services/systemctl_units
+fi
+units=$(<$file)
 
 for unit in ${units[@]}; do
     # 判断配置文件是否存在

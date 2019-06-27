@@ -1,0 +1,9 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${PORT1}:\${PORT1} \\
+echo -p \${PORT2}:\${PORT2} \\
+echo -v \${DATA_HOME}:/usr/share/elasticsearch/data \\
+echo "-e discovery.type=single-node" \\
+echo  \${IMAGE_NAME}:\${TAG}

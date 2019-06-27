@@ -1,0 +1,8 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${PORT}:\${PORT} \\
+echo "-e SERVER_NAME=\${SERVER_NAME}" \\
+echo "-e ELASTICSEARCH_HOSTS=\${ELASTICSEARCH_HOSTS}" \\
+echo  \${IMAGE_NAME}:\${TAG}
