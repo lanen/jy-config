@@ -1,0 +1,35 @@
+#!/bin/bash
+conf_dir=/usr/local/service/etc
+work_dir=/usr/local/service
+
+script=$1
+
+if [ ! -f "./services/${1}.unit" ]; then
+    echo "file not ./services/${1}.unit exits"
+    exit -1
+fi
+
+function exec_start(){
+. ./services/${1}.unit 
+}
+
+#############################################3
+echo [Unit]
+echo Description=%n
+echo After=docker.service
+echo Requires=docker.service
+echo [Service]
+
+echo EnvironmentFile=$conf_dir/nodes.env
+echo EnvironmentFile=$conf_dir/components.env
+echo EnvironmentFile=$conf_dir/cluster.env
+echo EnvironmentFile=$conf_dir/secret.env
+echo EnvironmentFile=$work_dir/%n.env
+exec_start $script
+echo Restart=on-failure
+echo RestartSec=1s
+echo TimeoutStartSec=120
+echo TimeoutStopSec=10
+
+echo [Install]
+echo WantedBy=multi-user.target

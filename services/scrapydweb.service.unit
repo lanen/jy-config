@@ -1,0 +1,9 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${PORT}:\${PORT} \\
+echo "-e TZ=Asia/Shanghai" \\
+echo -v \${DATA_HOME}:/var/lib/scrapyd \\
+echo -v /root/scrapydweb_settings_v8.py:/opt/scrapydweb_settings_v8.py \\
+echo  \${IMAGE_NAME}:\${TAG}

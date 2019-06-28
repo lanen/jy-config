@@ -15,16 +15,22 @@ function systemd_unit_config(){
     d=/usr/lib/systemd/system/
     b=$(dirname $config_dir)
     cp ./services/${1}.env $b
+   
     if [ -f "./services/${1}.setup" ]; then
 	./services/${1}.setup
     fi
-    ./bin/unit $1 > $d/$1
+
+    if [ "slack.service" == $1 ]; then
+        ./bin/unit0 $1 > $d/$1
+    else
+        ./bin/unit $1 > $d/$1
+    fi
 }
 
 common_environment_file
 file=$1
 if [ ! -f $file ]; then
-file=./services/systemctl_units
+    file=./services/systemctl_units
 fi
 units=$(<$file)
 

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo ExecStartPre=-/bin/kill -9 \$MAINPID
+echo ExecStart=/usr/local/bin/jy 
+echo PIDFile=/var/run/jy-bot.pid 
+#echo ExecStop=-/bin/docker stop %n

@@ -1,0 +1,8 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p 8500:8500 \\
+echo -v \${DATA_HOME}:/consul/data \\
+echo "-e CONSUL_BIND_INTERFACE=eth0" \\
+echo  \${IMAGE_NAME}:\${TAG}

@@ -1,0 +1,6 @@
+#!/bin/bash
+. bin/env
+echo ExecStart=/bin/docker run \\
+echo --name %n \\
+echo -p \${PORT}:\${PORT} \\
+echo  \${IMAGE_NAME}:\${TAG}
