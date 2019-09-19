@@ -1,6 +1,7 @@
 #!/bin/bash
 echo ExecStart=-/bin/docker run \\
 echo --name %n \\
-echo -p \${PORT}:\${PORT} \\
-echo -v \${DATA_HOME}:/data/db \\
+echo -p \${p1}:\${p1} \\
+echo -p \${p2}:\${p2} \\
+echo -v /root/.hal:/home/spinnaker/.hal \\
 echo  \${IMAGE_NAME}:\${TAG}
