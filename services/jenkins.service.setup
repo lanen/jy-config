@@ -1,0 +1,14 @@
+#!/bin/bash
+
+g=gradle
+u=gradle
+
+egrep "^$g" /etc/group >& /dev/null
+if [ $? -ne 0 ]; then
+    groupadd $g
+fi
+
+egrep "^$u" /etc/passwd >& /dev/null
+if [ $? -ne 0 ]; then
+    useradd -g $g $u
+fi
