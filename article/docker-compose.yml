@@ -1,0 +1,83 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data1:/var/lib/mysql
+      - ./replication.cnf:/etc/mysql/conf.d/replication.cnf
+#      - ./initialize-database.sql:/docker-entrypoint-initdb.d/initialize-database.sql
+      - /etc/localtime:/etc/localtime
+    environment:
+      - MYSQL_ROOT_PASSWORD=huang
+      - MYSQL_USER=mysqluser
+      - MYSQL_PASSWORD=password
+  zookeeper:
+    image: zookeeper
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+  kafka:
+    depends_on:
+      - zookeeper
+    image: wurstmeister/kafka:2.12-2.1.1
+    #image: wurstmeister/kafka:2.11-0.10.2.2
+    volumes:
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+  manager:
+    image: kafkamanager/kafka-manager
+    depends_on:
+      - zookeeper
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - ZK_HOSTS=zookeeper:2181
+      - JMX_PORT=9001
+  cdcservice:
+    image:  eventuateio/eventuateio-local-cdc-service:0.30.1.RELEASE
+    depends_on:
+      - zookeeper
+      - mysql
+      - kafka
+    ports:
+        - "8099:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/article?useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: huang
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+      EVENTUATE_CDC_TYPE: EventuateLocal
+      EVENTUATE_DATABASE_SCHEMA: article
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+      EVENTUATELOCAL_CDC_DB_USER_NAME: root
+      EVENTUATELOCAL_CDC_DB_PASSWORD: huang
+      EVENTUATELOCAL_CDC_READER_NAME: mysqluser
+      EVENTUATELOCAL_CDC_READER_PASSWORD: password
+      EVENTUATELOCAL_CDC_OFFSET_STORE_KEY: MySqlBinlog
+      EVENTUATELOCAL_CDC_BINLOG_CLIENT_ID: 2
+      EVENTUATELOCAL_CDC_MY_SQL_BIN_LOG_CLIENT_NAME: ClientEventuateLocal
+      EVENTUATELOCAL_CDC_DB_HISTORY_TOPIC_NAME: db.history.eventuate.local
+      EVENTUATELOCAL_CDC_MYSQL_BINLOG_CLIENT_UNIQUE_ID: 12345
+      EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC: "false"
+  api:
+    image: jy-article-api:latest
+    depends_on:
+      - mysql
+      - kafka
+    ports:
+      - "8080:8080"
+  portal:
+    image: jy-article-portal:latest
+    depends_on:
+      - api  
+    ports:
+      - "19090:8090"
