@@ -1,7 +1,8 @@
 version: '2'
 services:
   scrapyd:
-    image: registry.cn-shenzhen.aliyuncs.com/jiayi/scrapyd:1.0.0
+    image: registry.cn-shenzhen.aliyuncs.com/jiayi/scrapyd:latest
+    hostname: default_scrapyd
     ports:
       - "6800:6800"
     volumes:
@@ -12,10 +13,12 @@ services:
       - scrapyd
     ports:
       - "5000:5000"
+
     volumes:
-      - /var/run/scrapyd:/var/lib/scrapyd
-      - ./scrapydweb_settings_v8.py:/opt/scrapydweb_settings_v8.py
+      #- /var/run/scrapyd:/var/lib/scrapyd
+      - ./scrapydweb_settings_v10.py:/opt/scrapydweb_settings_v10.py
     environment:
       TZ: Asia/Shanghai
+      DEBUG: 1
 
   
