@@ -7,6 +7,7 @@ services:
       - "6800:6800"
     volumes:
       - /var/run/scrapyd:/var/lib/scrapyd
+      - /etc/localtime:/etc/localtime
   scrapydweb:
     image:  registry.cn-shenzhen.aliyuncs.com/jiayi/scrapydweb:latest
     depends_on:
@@ -17,6 +18,7 @@ services:
     volumes:
       #- /var/run/scrapyd:/var/lib/scrapyd
       - ./scrapydweb_settings_v10.py:/opt/scrapydweb_settings_v10.py
+      - /etc/localtime:/etc/localtime
     environment:
       TZ: Asia/Shanghai
       DEBUG: 1
