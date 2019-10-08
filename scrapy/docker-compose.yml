@@ -21,6 +21,7 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       TZ: Asia/Shanghai
+      DOCKER_HOST_IP: ${DOCKER_HOST_IP}
       DEBUG: 1
 
   

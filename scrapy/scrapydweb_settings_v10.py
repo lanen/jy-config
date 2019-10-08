@@ -47,7 +47,7 @@ PASSWORD = ''
 #   - e.g. ('', '', '127.0.0.1', '6800', '') or ('username', 'password', 'localhost', '6801', 'group')
 SCRAPYD_SERVERS = [
     #'127.0.0.1:6800',
-    ('','','10.16.18.152','6800', 'Default')
+    ('','', os.environ.get('DOCKER_HOST_IP', '127.0.0.1'),'6800', 'Default')
     # 'username:password@localhost:6801#group',
     #('username', 'password', 'localhost', '6801', 'group'),
 ]

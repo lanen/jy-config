@@ -16,7 +16,7 @@ services:
   mongo:
     image: mongo:latest
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - ./data2:/data/db
       - /etc/localtime:/etc/localtime

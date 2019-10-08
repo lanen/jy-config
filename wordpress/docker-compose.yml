@@ -1,0 +1,36 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/run/mysql/data:/var/lib/mysql
+      - /var/run/mysql/conf:/etc/mysql/conf.d
+      - /etc/localtime:/etc/localtime
+    environment:
+      MYSQL_ROOT_PASSWORD: huang
+  wordpress:
+    image: wordpress:5.2.3-php7.2-fpm-alpine 
+    ports:
+      - "9000:9000"
+    volumes:
+      #- ./php.ini:/usr/local/etc/php/php.ini
+      #- ./cacert.pem:/usr/local/etc/php/cacert.pem
+      - /etc/localtime:/etc/localtime
+      - ./index.php:/var/www/html//var/www/html/index.php
+    depends_on:
+      - mysql
+    environment:
+      TZ: Asia/Shanghai
+      DOCKER_HOST_IP: ${DOCKER_HOST_IP}
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_PORT: 3306
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: huang
+      WORDPRESS_DB_NAME: wp
+      WORDPRESS_TABLE_PREFIX: wp_
+      DEBUG: 1
+    extra_hosts:
+      - "dev-wp.buyou.me:10.16.18.150"
+  
